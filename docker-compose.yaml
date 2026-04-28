@@ -1,0 +1,20 @@
+services:
+  af:
+    container_name: analytics_impact
+    image: apache/airflow:3.0.0
+    ports:
+      - 8082:8080 
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./impact_analytics:/opt/airflow/impact_analytics
+      
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+    networks:
+      - my-networks  
+    command: >
+      bash -c "airflow db migrate && airflow standalone"
+    
+networks:
+  my-networks:
+
